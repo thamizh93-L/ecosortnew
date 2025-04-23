@@ -12,7 +12,7 @@
       background: url('https://images.unsplash.com/photo-1506765515384-028b60a970df?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
       background-size: cover;
       color: #ffffff;
-      padding: 30px;
+      padding: 20px;
     }
     h1 {
       font-size: 2.5em;
@@ -142,16 +142,11 @@
   <div class="footer">Developed by Tamizhkudimagan - Watermark Champion</div>
 
   <div class="sliding-messages" id="slidingMessages">
-    <div class="message">🌍 Every small step matters — plant a tree, reduce plastic, and walk more. Let’s honor Earth not just today, but every day!
-    </div>
-    <div class="message">🌱 This Earth Day, let’s reconnect with nature and commit to protecting our only home. A greener future starts with us!
-    </div>
-    <div class="message">💧 Save water, save energy, save Earth. Our actions today shape tomorrow’s planet.
-    </div>
-    <div class="message">🌿 Earth gives us everything — let’s give back by living more sustainably. Happy Earth Day!
-    </div>
-    <div class="message">🌎 Together, we can restore our Earth. Let’s recycle, reuse, and rethink our choices for a healthier planet.
-    </div>
+    <div class="message">🌍 Every small step matters — plant a tree, reduce plastic, and walk more. Let’s honor Earth not just today, but every day!</div>
+    <div class="message">🌱 This Earth Day, let’s reconnect with nature and commit to protecting our only home. A greener future starts with us!</div>
+    <div class="message">💧 Save water, save energy, save Earth. Our actions today shape tomorrow’s planet.</div>
+    <div class="message">🌿 Earth gives us everything — let’s give back by living more sustainably. Happy Earth Day!</div>
+    <div class="message">🌎 Together, we can restore our Earth. Let’s recycle, reuse, and rethink our choices for a healthier planet.</div>
   </div>
 
   <script>
@@ -186,22 +181,30 @@
 
     function checkAnswer(selected) {
       const correct = questions[currentQuestion].answer;
+
+      // Disable all choice buttons
+      const allButtons = document.querySelectorAll('#choices button');
+      allButtons.forEach(btn => btn.disabled = true);
+
       if (selected === correct) {
         score++;
         showToast("✅ Correct!");
       } else {
         showToast("❌ Oops! Correct answer: " + questions[currentQuestion].options[correct]);
       }
-      currentQuestion++;
-      document.getElementById('score').innerText = `Score: ${score}`;
-      if (currentQuestion < questions.length) {
-        showQuestion();
-      } else {
-        document.getElementById('question').innerText = "🎉 Game Over!";
-        document.getElementById('choices').innerHTML = "Thanks for playing!";
-        document.getElementById('submitBtn').disabled = false;
-        showLeaderboard();
-      }
+
+      setTimeout(() => {
+        currentQuestion++;
+        document.getElementById('score').innerText = `Score: ${score}`;
+        if (currentQuestion < questions.length) {
+          showQuestion();
+        } else {
+          document.getElementById('question').innerText = "🎉 Game Over!";
+          document.getElementById('choices').innerHTML = "Thanks for playing!";
+          document.getElementById('submitBtn').disabled = false;
+          showLeaderboard();
+        }
+      }, 1000); // Delay for user to see feedback
     }
 
     function resetGame() {
@@ -255,7 +258,7 @@
     }
 
     function shareOnWhatsApp() {
-      const message = document.getElementById("shareMessage").value || `I just scored ${score}/${questions.length} on the Earth Day Eco Rescue Game! 🌍 Play now: https://thamizh93-l.github.io/ecosortnew/ `;
+      const message = document.getElementById("shareMessage").value || `I just scored ${score}/${questions.length} on the Earth Day Eco Rescue Game! 🌍 Play now: https://tamizhkudimagan.github.io/eco-rescue/`;
       const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
       window.open(url, '_blank');
     }
