@@ -3,25 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Eco Rescue: Save the Planet</title>
+  <title>Happy Earth Day: Our Power, Our Planet</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       text-align: center;
-      background: #e6f9f3;
-      color: #2f4f4f;
+      background: url('https://images.unsplash.com/photo-1506765515384-028b60a970df?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #ffffff;
       padding: 20px;
     }
     h1 {
       font-size: 2.5em;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
+    }
+    h2 {
+      font-size: 1.5em;
+      margin-top: 0;
     }
     .game-section {
       margin: 20px auto;
       max-width: 600px;
-      background: #fff;
+      background: rgba(0, 0, 0, 0.6);
       border-radius: 15px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
       padding: 20px;
     }
     .question {
@@ -44,15 +49,45 @@
       margin-top: 20px;
       font-size: 1.2em;
     }
+    .footer {
+      font-size: 0.8em;
+      margin-top: 15px;
+      color: #e0e0e0;
+    }
+    .btn-section {
+      margin-top: 20px;
+    }
+    .btn-section button, .btn-section a {
+      padding: 10px 15px;
+      margin: 5px;
+      background-color: #008CBA;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn-section button:hover, .btn-section a:hover {
+      background-color: #007bb5;
+    }
   </style>
 </head>
 <body>
-  <h1>🌍 Eco Rescue: Save the Planet</h1>
+  <h1>🌍 Happy Earth Day</h1>
+  <h2>Our Power, Our Planet - April 22</h2>
+
   <div class="game-section">
     <div class="question" id="question">Loading question...</div>
     <div class="choices" id="choices"></div>
     <div class="score" id="score">Score: 0</div>
+
+    <div class="btn-section" id="controls">
+      <button onclick="resetGame()">🔄 Reset Game</button>
+      <a href="https://forms.office.com/r/JCBxhrZq14" target="_blank">📩 Submit</a>
+    </div>
   </div>
+
+  <div class="footer">Developed by Tamizhkudimagan - Watermark Champion</div>
 
   <script>
     const questions = [
@@ -140,6 +175,13 @@
         document.getElementById('question').innerText = "🎉 Game Over!";
         document.getElementById('choices').innerHTML = "Thanks for playing!";
       }
+    }
+
+    function resetGame() {
+      currentQuestion = 0;
+      score = 0;
+      document.getElementById('score').innerText = `Score: ${score}`;
+      showQuestion();
     }
 
     showQuestion();
