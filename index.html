@@ -70,6 +70,23 @@
     .btn-section button:hover, .btn-section a:hover {
       background-color: #007bb5;
     }
+    .sliding-messages {
+      margin-top: 30px;
+      font-weight: bold;
+      font-size: 1.1em;
+      height: 30px;
+      overflow: hidden;
+      position: relative;
+    }
+    .message {
+      position: absolute;
+      width: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .message.show {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -83,64 +100,32 @@
 
     <div class="btn-section" id="controls">
       <button onclick="resetGame()">🔄 Reset Game</button>
-      <a href="https://forms.office.com/r/JCBxhrZq14" target="_blank">📩 Submit</a>
+      <button id="submitBtn" onclick="submitGame()" disabled>📩 Submit</button>
     </div>
   </div>
 
   <div class="footer">Developed by Tamizhkudimagan - Watermark Champion</div>
 
+  <div class="sliding-messages" id="slidingMessages">
+    <div class="message">🌍 Every small step matters — plant a tree, reduce plastic, and walk more. Let’s honor Earth not just today, but every day!</div>
+    <div class="message">🌱 This Earth Day, let’s reconnect with nature and commit to protecting our only home. A greener future starts with us!</div>
+    <div class="message">💧 Save water, save energy, save Earth. Our actions today shape tomorrow’s planet.</div>
+    <div class="message">🌿 Earth gives us everything — let’s give back by living more sustainably. Happy Earth Day!</div>
+    <div class="message">🌎 Together, we can restore our Earth. Let’s recycle, reuse, and rethink our choices for a healthier planet.</div>
+  </div>
+
   <script>
     const questions = [
-      {
-        q: "What is the best way to reduce plastic waste?",
-        options: ["Burn it", "Reuse and recycle", "Throw in river"],
-        answer: 1
-      },
-      {
-        q: "Which of these helps combat climate change?",
-        options: ["Planting trees", "Using plastic bags", "Littering"],
-        answer: 0
-      },
-      {
-        q: "What should you do with e-waste?",
-        options: ["Recycle at proper centers", "Throw in dustbin", "Bury it"],
-        answer: 0
-      },
-      {
-        q: "Which energy source is renewable?",
-        options: ["Coal", "Wind", "Natural Gas"],
-        answer: 1
-      },
-      {
-        q: "How can individuals conserve water?",
-        options: ["Leave taps running", "Use water-efficient fixtures", "Wash cars daily"],
-        answer: 1
-      },
-      {
-        q: "Which gas is a major contributor to global warming?",
-        options: ["Oxygen", "Carbon Dioxide", "Nitrogen"],
-        answer: 1
-      },
-      {
-        q: "What should you avoid to reduce your carbon footprint?",
-        options: ["Public transport", "Carpooling", "Single-use plastics"],
-        answer: 2
-      },
-      {
-        q: "What is composting?",
-        options: ["Burning waste", "Recycling paper", "Decomposing organic waste to make fertilizer"],
-        answer: 2
-      },
-      {
-        q: "How can deforestation be reduced?",
-        options: ["Plant more trees", "Use paper irresponsibly", "Burn forests"],
-        answer: 0
-      },
-      {
-        q: "Which action helps reduce air pollution?",
-        options: ["Using electric vehicles", "Burning garbage", "Using diesel generators"],
-        answer: 0
-      }
+      { q: "What is the best way to reduce plastic waste?", options: ["Burn it", "Reuse and recycle", "Throw in river"], answer: 1 },
+      { q: "Which of these helps combat climate change?", options: ["Planting trees", "Using plastic bags", "Littering"], answer: 0 },
+      { q: "What should you do with e-waste?", options: ["Recycle at proper centers", "Throw in dustbin", "Bury it"], answer: 0 },
+      { q: "Which energy source is renewable?", options: ["Coal", "Wind", "Natural Gas"], answer: 1 },
+      { q: "How can individuals conserve water?", options: ["Leave taps running", "Use water-efficient fixtures", "Wash cars daily"], answer: 1 },
+      { q: "Which gas is a major contributor to global warming?", options: ["Oxygen", "Carbon Dioxide", "Nitrogen"], answer: 1 },
+      { q: "What should you avoid to reduce your carbon footprint?", options: ["Public transport", "Carpooling", "Single-use plastics"], answer: 2 },
+      { q: "What is composting?", options: ["Burning waste", "Recycling paper", "Decomposing organic waste to make fertilizer"], answer: 2 },
+      { q: "How can deforestation be reduced?", options: ["Plant more trees", "Use paper irresponsibly", "Burn forests"], answer: 0 },
+      { q: "Which action helps reduce air pollution?", options: ["Using electric vehicles", "Burning garbage", "Using diesel generators"], answer: 0 }
     ];
 
     let currentQuestion = 0;
@@ -148,7 +133,7 @@
 
     function showQuestion() {
       const q = questions[currentQuestion];
-      document.getElementById('question').innerText = q.q;
+      document.getElementById('question').innerText = `${currentQuestion + 1}. ${q.q}`;
       const choicesDiv = document.getElementById('choices');
       choicesDiv.innerHTML = '';
       q.options.forEach((opt, idx) => {
@@ -174,6 +159,7 @@
       } else {
         document.getElementById('question').innerText = "🎉 Game Over!";
         document.getElementById('choices').innerHTML = "Thanks for playing!";
+        document.getElementById('submitBtn').disabled = false;
       }
     }
 
@@ -181,10 +167,25 @@
       currentQuestion = 0;
       score = 0;
       document.getElementById('score').innerText = `Score: ${score}`;
+      document.getElementById('submitBtn').disabled = true;
       showQuestion();
     }
 
+    function submitGame() {
+      window.open("https://forms.office.com/r/JCBxhrZq14", "_blank");
+    }
+
     showQuestion();
+
+    const messages = document.querySelectorAll(".message");
+    let msgIndex = 0;
+    function cycleMessages() {
+      messages.forEach((msg, i) => msg.classList.remove("show"));
+      messages[msgIndex].classList.add("show");
+      msgIndex = (msgIndex + 1) % messages.length;
+    }
+    setInterval(cycleMessages, 9000); // 9 seconds delay
+    cycleMessages();
   </script>
 </body>
 </html>
